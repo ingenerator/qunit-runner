@@ -35,6 +35,6 @@ COPY entrypoint.sh ./
 
 EXPOSE 8000
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["test", "application/assets/js/tests/qunit_compiled.html"]
