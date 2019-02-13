@@ -1,0 +1,18 @@
+images:
+  - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$BRANCH_NAME'
+  - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+tags:
+  - $REPO_NAME
+  - $BRANCH_NAME
+  - $COMMIT_SHA
+timeout: 240s
+steps:
+  - id: 'build'
+    name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$BRANCH_NAME'
+      - '-t'
+      - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+      - '.'
