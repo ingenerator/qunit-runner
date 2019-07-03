@@ -25,7 +25,7 @@ run_test_suite() {
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
   set +e
-  docker run --cap-add=SYS_ADMIN --rm -it -v $DIR:/workspace $IMAGE_TAG test $test_suite
+  docker run --cap-add=SYS_ADMIN --rm -v $DIR:/workspace $IMAGE_TAG test $test_suite
   actual_result=$?
   set -e
 
