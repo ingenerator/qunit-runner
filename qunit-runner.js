@@ -26,8 +26,13 @@ const puppeteer = require('puppeteer');
 // Attach to browser console log events, and log to node console
   await page.on('console', (...params) => {
     console.log("\n---------------------\nFrom browser console: ");
-    for (let i = 0; i < params.length; ++i)
-      console.log(`${params[i]}`);
+    for (let i = 0; i < params.length; ++i) {
+      if (params[i]._text) {
+        console.log(params[i]._text);
+      } else {
+        console.log(params[i]);
+      }
+    }
     console.log("---------------------");
   });
 
@@ -63,7 +68,7 @@ const puppeteer = require('puppeteer');
     }
 
     if (context.expected) {
-      msg += "\n      Expected: " + context.expected + ", Actual: " + context.actual;
+      msg += "\n      Expected: " + JSON.stringify(context.expected) + ", Actual: " + JSON.stringify(context.actual);
     }
 
     assertionErrors.push(msg);
