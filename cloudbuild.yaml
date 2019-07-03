@@ -16,3 +16,9 @@ steps:
       - '-t'
       - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
       - '.'
+
+  - id: 'integration-test'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: '/workspace/tests/integration-test.sh'
+    args:
+      - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
