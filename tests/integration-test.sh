@@ -37,6 +37,7 @@ run_test_suite() {
   else
     echo "[✗] $test_suite - expected exit code $expect_result, got $actual_result"
     FAILED_SUITES="$FAILED_SUITES - $test_suite$newline"
+    exit 1
   fi
 }
 
