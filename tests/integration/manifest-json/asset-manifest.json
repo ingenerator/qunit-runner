@@ -16,6 +16,9 @@
                 ],
                 "qunit": "2.9.2",
                 "jquery": "1.12.4",
+                "libraries": [
+                    "_dummy/1.5.9/dummy-lib.js"
+                ],
                 "compiled_sources": [
                     "src/test-compiled.js"
                 ]

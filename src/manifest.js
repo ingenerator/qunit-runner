@@ -53,6 +53,16 @@ module.exports = function (manifest_file) {
         });
     }
 
+    function convertLibraryPaths(rel_paths) {
+        return rel_paths.map(rel_path => {
+            if (/^https?/.test(rel_path)) {
+                return rel_path;
+            } else {
+                return `/libs/${rel_path}`;
+            }
+        });
+    }
+
     /*
      * ===========================================================================================================
      * PUBLIC METHODS
@@ -76,6 +86,7 @@ module.exports = function (manifest_file) {
                 });
             });
             suite_meta.compiled_sources = makePathsAbsolute(suite_meta.compiled_sources);
+            suite_meta.libraries = convertLibraryPaths(suite_meta.libraries || []);
             callback(suite_meta);
         });
     };

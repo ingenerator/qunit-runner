@@ -33,6 +33,7 @@ module.exports.renderHTML = function (suite, source_files, output_file) {
             <div id="qunit-fixture"></div>
             
             ${renderTestRunner(suite)}
+            ${renderScriptList('Supporting libraries and helpers', suite.libraries)}
             ${renderScriptList('Raw / compiled sources under test', source_files)}            
             ${renderScriptList('Tests', suite.test_files)}
             </body>
