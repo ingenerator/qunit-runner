@@ -19,12 +19,15 @@ RUN npm install \
         puppeteer@1.12.2 \
         light-server \
  && npm cache clean --force \
- && mkdir /workspace
+ && mkdir /workspace \
+ && mkdir /docroot \
+ && ln -s /workspace /docroot/workspace
 
 # Add user so we don't need --no-sandbox.
 RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /docroot \
     && chown -R pptruser:pptruser /workspace
 
 ENV PATH="/node_modules/.bin:${PATH}"
@@ -34,6 +37,9 @@ USER pptruser
 
 COPY qunit-runner.js ./
 COPY entrypoint.sh ./
+COPY compile-suites.js ./
+COPY src ./src/
+COPY libs /docroot/libs
 
 EXPOSE 8000
 
