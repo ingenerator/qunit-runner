@@ -6,7 +6,9 @@ RUN apk update && apk upgrade && \
     apk add --no-cache \
       chromium@edge \
       harfbuzz@edge \
-      nss@edge
+      freetype@edge \
+      nss@edge \
+      ttf-freefont@edge
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 # Must specify path to executable
