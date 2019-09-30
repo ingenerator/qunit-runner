@@ -1,0 +1,39 @@
+{
+    "js": {
+        "compile": {
+            "src/test-compiled.js": {
+                "sources": [
+                    "src/test-source-1.js",
+                    "src/test-source-2.js"
+                ]
+            }
+        },
+        "qunit_suites": [
+            {
+                "name": "passing",
+                "test_dirs": [
+                    "tests/passing-suite"
+                ],
+                "qunit": "2.9.2",
+                "jquery": "1.12.4",
+                "libraries": [
+                    "_dummy/1.5.9/dummy-lib.js"
+                ],
+                "compiled_sources": [
+                    "src/test-compiled.js"
+                ]
+            },
+            {
+                "name": "failing",
+                "test_dirs": [
+                    "tests/failing-suite"
+                ],
+                "qunit": "2.9.2",
+                "jquery": "1.12.4",
+                "compiled_sources": [
+                    "src/test-compiled.js"
+                ]
+            }
+        ]
+    }
+}

@@ -44,6 +44,9 @@ run_test_suite() {
 run_test_suite integration/explicit-suite/qunit-passing.html 0
 run_test_suite integration/explicit-suite/qunit-failing.html 1
 
+run_test_suite "integration/manifest-json/asset-manifest.json passing" 0
+run_test_suite "integration/manifest-json/asset-manifest.json failing" 1
+
 echo ""
 echo ""
 if [ -z "$FAILED_SUITES" ]

@@ -20,4 +20,12 @@ $(function () {
         );
     });
 
+    QUnit.test('source 1 has been loaded', function (assert) {
+        assert.equal(true, window.ingen.test1, 'Global value should have been set by test source 1');
+    });
+
+    QUnit.test('source 2 has been loaded and in correct sequence', function (assert) {
+        assert.equal('test 2 is loaded', window.ingen.test2, 'Global value should have been overridden by test source 2');
+    });
+
 });
