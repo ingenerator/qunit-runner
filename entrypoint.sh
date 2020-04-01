@@ -62,7 +62,7 @@ case "$1" in
         ;;
 
     dev)
-        light-server --serve "$DOCROOT" --port 8000 --watchexp "**/*.js, **/*.html"
+        light-server --serve "$DOCROOT" --port 8000 --watchexp "/workspace/**/*.js, /workspace/**/*.html"
         ;;
 
     *)
