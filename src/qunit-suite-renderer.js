@@ -34,6 +34,7 @@ module.exports.renderHTML = function (suite, source_files, output_file) {
             
             ${renderTestRunner(suite)}
             ${renderScriptList('Supporting libraries and helpers', suite.libraries)}
+            ${renderScriptList('Supporting local libraries and helpers', suite.libraries_local)}
             ${renderScriptList('Raw / compiled sources under test', source_files)}            
             ${renderScriptList('Tests', suite.test_files)}
             </body>
