@@ -1,0 +1,55 @@
+on:
+  push:
+
+env:
+  IMAGE_NAME: qunit-runner
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    name: Build and publish docker container
+    permissions:
+      # This sets an explicit list of restrictive permissions for the GH_TOKEN that will be issued, it still doesn't
+      # guarantee that it's safe to use third-party actions (they'd still be able to do anything we're meant to do)
+      # but it at least restricts the privilege scope
+      actions: none
+      checks: none
+      contents: read
+      deployments: none
+      issues: none
+      packages: write
+      pull-requests: none
+      repository-projects: none
+      security-events: none
+      statuses: none
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+
+      - name: Run container integration tests
+        run:  tests/integration-test.sh $IMAGE_NAME
+
+      # Only attempt to publish the image if this is triggered by a `push` (e.g. direct to the repo by a collaborator,
+      # not an external pull request). This step would anyway fail on a pull_request workflow because the required
+      # secret would not be available.
+      - name: Push image to GitHub Container Registry
+        if:   ${{ github.event_name == 'push' }}
+        run: |
+          set -o errexit
+          set -o nounset
+          # Login to Github registry
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
