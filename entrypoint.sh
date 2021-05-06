@@ -35,7 +35,7 @@ then
   MANIFEST_FILE="/workspace/$2"
 
   echo "Compiling qunit suites from asset manifest"
-  node /compile-suites.js "$MANIFEST_FILE" "$DOCROOT"
+  node /qunit-runner/compile-suites.js "$MANIFEST_FILE" "$DOCROOT"
 
 else
   USING_MANIFEST=0
@@ -58,7 +58,7 @@ case "$1" in
 
         # Serve the files and run the test suite
         light-server --serve "$DOCROOT" --port 8000 --no-reload --quiet &
-        node /qunit-runner.js http://localhost:8000/$test_url
+        node /qunit-runner/qunit-runner.js http://localhost:8000/$test_url
         ;;
 
     dev)

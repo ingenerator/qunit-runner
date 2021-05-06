@@ -15,6 +15,8 @@ RUN apk update && apk upgrade && \
 #   const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser'});
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
+WORKDIR /qunit-runner
+
 RUN npm install \
         puppeteer@1.12.2 \
         light-server \
@@ -30,7 +32,7 @@ RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && chown -R pptruser:pptruser /docroot \
     && chown -R pptruser:pptruser /workspace
 
-ENV PATH="/node_modules/.bin:${PATH}"
+ENV PATH="/qunit-runner/node_modules/.bin:${PATH}"
 
 # Run everything after as non-privileged user.
 USER pptruser
@@ -43,6 +45,6 @@ COPY libs /docroot/libs
 
 EXPOSE 8000
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/qunit-runner/entrypoint.sh"]
 
 CMD ["test", "application/assets/js/tests/qunit_compiled.html"]
